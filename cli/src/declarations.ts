@@ -266,6 +266,8 @@ export interface CapacitorConfig {
   };
 
   ios?: {
+    appclip?: boolean;
+    
     /**
      * Specify a custom path to the native iOS project.
      *

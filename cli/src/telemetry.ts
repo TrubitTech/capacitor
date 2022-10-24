@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Command } from 'commander';
 import Debug from 'debug';
 
@@ -44,6 +45,17 @@ export function telemetryAction(
   action: CommanderAction,
 ): CommanderAction {
   return async (...actionArgs: any[]): Promise<void> => {
+    // TODO: structure this independently of telemetry & fix typescript errors
+    if (actionArgs[0] === "appclip") {
+      actionArgs[0] = "ios";
+
+      config.ios.appclip = true;
+      config.ios.scheme = "AppClip"
+      config.ios.nativeTargetDir = "AppClip";
+      config.ios.nativeTargetDirAbs = `${config.ios.nativeProjectDirAbs}/AppClip`;
+      config.ios.webDirAbs = config.ios.nativeTargetDirAbs + "/public";
+    }
+
     const start = new Date();
     // This is how commanderjs works--the command object is either the last
     // element or second to last if there are additional options (via `.allowUnknownOption()`)
